@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Prime Numbers</title>
+        <meta charset="UTF-8"/>
+    </head>
+
+    <body>
+        <h1>Prime Numbers</h1>
+
+        <table id="primes"></table>
+
+
+        <script>
+          // true => Prime
+          // false => Not a prime
+          var numbers = [];
+
+          var nMax = 10000;
+          var rowLength = 40;
+
+          for (var i = 1; i <= nMax; i++){
+              numbers[i] = true; // Assume that all numbers are primes to start with.
+          }
+          numbers[1] = false;
+
+          for (var currentPrime = 2; currentPrime <= nMax; currentPrime++){
+              if(numbers[currentPrime] === true){
+                  for (var i = 2*currentPrime; i <= nMax; i+=currentPrime){
+                        numbers[i] = false;
+                  }
+              }
+          }
+
+          var rows = [];
+          var row = document.createElement("tr");
+          rows.push(row);
+
+          for (var step = 1; step <= nMax; step++) {
+              var cell = document.createElement("td");
+              cell.innerHTML = step;
+              row.appendChild(cell);
+              cell.style.backgroundColor="#EEE";
+
+              if(numbers[step] === true){
+                 cell.style.backgroundColor="#00FF00";
+              }
+
+              if(step % rowLength === 0){
+                  row = document.createElement("tr");
+                  rows.push(row);
+              }
+          }
+
+          var primesTable = document.getElementById("primes");
+          for (var i =0 ; i< rows.length; i++){
+              primesTable.appendChild(rows[i]);
+          }
+        </script>
+    </body>
+</html>
